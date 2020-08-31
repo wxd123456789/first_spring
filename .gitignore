@@ -3,3 +3,9 @@
 .idea
 .idea/*.xml
 target/
+
+*.iml
+
+lib
+
+logs
