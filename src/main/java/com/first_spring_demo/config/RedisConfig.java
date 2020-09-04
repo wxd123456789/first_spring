@@ -59,7 +59,6 @@ public class RedisConfig extends CachingConfigurerSupport {
 
     @Bean
     public RedisTemplate<String, Object> redisTemplate(@Autowired JedisConnectionFactory redisConnectionFactory) {
-        Print.print("init redisTemplate success ... ");
         RedisSerializer<Object> serializer = redisSerializer();
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);

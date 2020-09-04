@@ -2,9 +2,13 @@ package com.first_spring_demo.controller;
 
 import com.first_spring_demo.common.api.Response;
 import com.first_spring_demo.dto.UmsAdminLoginParam;
+import com.first_spring_demo.mbg.model.UmsAdmin;
 import com.first_spring_demo.service.UmsAdminService;
+import com.first_spring_demo.service.UmsRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +35,10 @@ public class UmsAdminController {
     private String tokenHead;
     @Autowired
     private UmsAdminService adminService;
+    @Autowired
+    private UmsRoleService roleService;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(UmsAdminController.class);
 
 
     @ApiOperation(value = "登录以后返回token")
@@ -44,6 +53,23 @@ public class UmsAdminController {
         tokenMap.put("token", token);
         tokenMap.put("tokenHead", tokenHead);
         return Response.success(tokenMap);
+    }
+
+    @ApiOperation(value = "获取当前登录用户信息")
+    @RequestMapping(value = "/info", method = RequestMethod.GET)
+    @ResponseBody
+    public Response getAdminInfo(Principal principal) {
+        if (principal == null) {
+            return Response.unauthorized(null);
+        }
+        String username = principal.getName();
+        UmsAdmin umsAdmin = adminService.getAdminByUsername(username);
+        Map<String, Object> data = new HashMap<>(4);
+        data.put("username", umsAdmin.getUsername());
+        data.put("roles", new String[]{"TEST"});
+        data.put("menus", roleService.getMenuList(umsAdmin.getId()));
+        data.put("icon", umsAdmin.getIcon());
+        return Response.success(data);
     }
 
 }
