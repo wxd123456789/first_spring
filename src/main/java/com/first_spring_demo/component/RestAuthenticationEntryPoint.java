@@ -2,8 +2,10 @@ package com.first_spring_demo.component;
 
 import cn.hutool.json.JSONUtil;
 import com.first_spring_demo.common.api.Response;
+import com.first_spring_demo.common.utils.Print;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -12,10 +14,14 @@ import java.io.IOException;
 
 /**
  * 自定义返回结果：未登录或登录过期
+ *
+ * @author Administrator
  */
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
+    //???????????????????????? raise AuthenticationException, can not call this method????????????why
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+        Print.print("RestAuthenticationEntryPoint");
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Cache-Control", "no-cache");
         response.setCharacterEncoding("UTF-8");

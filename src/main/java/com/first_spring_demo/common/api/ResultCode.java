@@ -2,6 +2,8 @@ package com.first_spring_demo.common.api;
 
 /**
  * 枚举了一些常用API操作码
+ *
+ * @author Administrator
  */
 public enum ResultCode implements IErrorCode {
     SUCCESS(200, "操作成功"),

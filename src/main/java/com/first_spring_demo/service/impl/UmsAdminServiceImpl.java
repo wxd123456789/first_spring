@@ -65,9 +65,6 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         //密码需要客户端加密后传递
         try {
             UserDetails userDetails = loadUserByUsername(username);
-            LOGGER.info("password in req: {}", password);
-            String passwordInDB = userDetails.getPassword();
-            LOGGER.info("passwordInDB: {}", passwordInDB);
             if (!passwordEncoder.matches(password, userDetails.getPassword())) {
                 throw new BadCredentialsException("密码不正确");
             }

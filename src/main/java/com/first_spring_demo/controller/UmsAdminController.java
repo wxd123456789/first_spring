@@ -11,6 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AuthenticationServiceException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.access.ExceptionTranslationFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,11 +61,13 @@ public class UmsAdminController {
     @ApiOperation(value = "获取当前登录用户信息")
     @RequestMapping(value = "/info", method = RequestMethod.GET)
     @ResponseBody
-    public Response getAdminInfo(Principal principal) {
-        if (principal == null) {
-            return Response.unauthorized(null);
+    public Response getAdminInfo() {
+        //before method---Principal principal == null ????????????????????????? why
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null) {
+            throw new AuthenticationServiceException("Get user name from token failed");
         }
-        String username = principal.getName();
+        String username = auth.getName();
         UmsAdmin umsAdmin = adminService.getAdminByUsername(username);
         Map<String, Object> data = new HashMap<>(4);
         data.put("username", umsAdmin.getUsername());
@@ -71,5 +76,4 @@ public class UmsAdminController {
         data.put("icon", umsAdmin.getIcon());
         return Response.success(data);
     }
-
 }
