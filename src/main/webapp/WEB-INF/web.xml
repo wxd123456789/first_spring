@@ -26,11 +26,14 @@
 
     <!--use servlet filter -->
     <filter>
-        <filter-name>jwtAuthenticationTokenFilter</filter-name>
+        <!--springSecurityFilterChain 该过滤器的名称应该与spring security的filter链的配置名称相同-->
+        <!--springSecurityFilterChain External alias for FilterChainProxy bean, for use in web.xml files -->
+        <!--jwtAuthenticationTokenFilter Before Bug !!!!!!!!!!!!! only support one customer filter-->
+        <filter-name>springSecurityFilterChain</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>jwtAuthenticationTokenFilter</filter-name>
+        <filter-name>springSecurityFilterChain</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 </web-app>

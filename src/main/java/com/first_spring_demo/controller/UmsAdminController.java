@@ -62,11 +62,7 @@ public class UmsAdminController {
     @RequestMapping(value = "/info", method = RequestMethod.GET)
     @ResponseBody
     public Response getAdminInfo() {
-        //before method---Principal principal == null ????????????????????????? why
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth == null) {
-            throw new AuthenticationServiceException("Get user name from token failed");
-        }
         String username = auth.getName();
         UmsAdmin umsAdmin = adminService.getAdminByUsername(username);
         Map<String, Object> data = new HashMap<>(4);

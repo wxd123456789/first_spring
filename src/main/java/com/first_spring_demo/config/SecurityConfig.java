@@ -2,15 +2,17 @@ package com.first_spring_demo.config;
 
 import com.first_spring_demo.common.utils.JwtTokenUtil;
 import com.first_spring_demo.common.utils.Print;
-import com.first_spring_demo.component.JwtAuthenticationTokenFilter;
-import com.first_spring_demo.component.RestAuthenticationEntryPoint;
-import com.first_spring_demo.component.RestfulAccessDeniedHandler;
+import com.first_spring_demo.component.*;
+import com.first_spring_demo.mbg.model.UmsResource;
 import com.first_spring_demo.service.UmsAdminService;
+import com.first_spring_demo.service.UmsResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.*;
+import org.springframework.core.type.AnnotatedTypeMetadata;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,9 +23,12 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
@@ -37,18 +42,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private List<String> ignoreUrls;
     @Autowired
     private UmsAdminService adminService;
+    @Autowired
+    private UmsResourceService resourceService;
+    @Autowired(required = false)
+    private DynamicSecurityService dynamicSecurityService;
 
-
-    @Bean
-    public UserDetailsService myUserDetailsService() {
-        //获取登录用户信息
-        return username -> adminService.loadUserByUsername(username);
+    class HasDynamicSecurityService implements Condition {
+        @Override
+        public boolean matches(ConditionContext conditionContext, AnnotatedTypeMetadata annotatedTypeMetadata) {
+            return dynamicSecurityService != null;
+        }
     }
 
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        Print.print("SecurityConfig configure start ...");
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = httpSecurity
                 .authorizeRequests();
         //不需要保护的资源路径允许访问
@@ -78,13 +86,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 自定义权限拦截器JWT过滤器
                 .and()
                 .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        //有动态权限配置时添加动态权限校验过滤器
+        if (dynamicSecurityService != null) {
+            registry.and().addFilterBefore(dynamicSecurityFilter(), FilterSecurityInterceptor.class);
+        }
     }
+
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(this.myUserDetailsService())
                 .passwordEncoder(passwordEncoder());
     }
+
+    @Bean
+    public UserDetailsService myUserDetailsService() {
+        return username -> adminService.loadUserByUsername(username);
+    }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -109,6 +128,47 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public JwtTokenUtil jwtTokenUtil() {
         return new JwtTokenUtil();
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    // dynamicSecurityService
+    @Bean
+    public DynamicSecurityService dynamicSecurityService() {
+        return new DynamicSecurityService() {
+            @Override
+            public Map<String, ConfigAttribute> loadDataSource() {
+                Map<String, ConfigAttribute> map = new ConcurrentHashMap<>();
+                List<UmsResource> resourceList = resourceService.listAll();
+                for (UmsResource resource : resourceList) {
+                    map.put(resource.getUrl(), new org.springframework.security.access.SecurityConfig(resource.getId() + ":" + resource.getName()));
+                }
+                return map;
+            }
+        };
+    }
+
+    @Conditional(HasDynamicSecurityService.class)
+    @Bean
+    public DynamicAccessDecisionManager dynamicAccessDecisionManager() {
+        return new DynamicAccessDecisionManager();
+    }
+
+
+    @Conditional(HasDynamicSecurityService.class)
+    @Bean
+    public DynamicSecurityFilter dynamicSecurityFilter() {
+        return new DynamicSecurityFilter();
+    }
+
+    @Conditional(HasDynamicSecurityService.class)
+    @Bean
+    public DynamicSecurityMetadataSource dynamicSecurityMetadataSource() {
+        return new DynamicSecurityMetadataSource();
     }
 
 }

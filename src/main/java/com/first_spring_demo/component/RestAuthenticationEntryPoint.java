@@ -5,7 +5,6 @@ import com.first_spring_demo.common.api.Response;
 import com.first_spring_demo.common.utils.Print;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +17,6 @@ import java.io.IOException;
  * @author Administrator
  */
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
-    //???????????????????????? raise AuthenticationException, can not call this method????????????why
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         Print.print("RestAuthenticationEntryPoint");
