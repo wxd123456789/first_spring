@@ -1,6 +1,6 @@
 package com.first_spring_demo.config;
 
-import com.first_spring_demo.common.exception.MyException;
+import com.first_spring_demo.common.exception.MallException;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -70,7 +70,7 @@ public class AppConfig implements WebMvcConfigurer {
             }
             sqlSessionFactoryBean.setMapperLocations(resources.toArray(new Resource[resources.size()]));
         } catch (IOException e) {
-            throw new MyException("get xml mapper Resources failed");
+            throw new MallException("get xml mapper Resources failed");
         }
         return sqlSessionFactoryBean;
     }

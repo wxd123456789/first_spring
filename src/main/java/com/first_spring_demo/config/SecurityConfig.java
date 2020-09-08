@@ -8,8 +8,9 @@ import com.first_spring_demo.service.UmsAdminService;
 import com.first_spring_demo.service.UmsResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.*;
-import org.springframework.core.type.AnnotatedTypeMetadata;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -46,13 +47,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private UmsResourceService resourceService;
     @Autowired(required = false)
     private DynamicSecurityService dynamicSecurityService;
-
-    class HasDynamicSecurityService implements Condition {
-        @Override
-        public boolean matches(ConditionContext conditionContext, AnnotatedTypeMetadata annotatedTypeMetadata) {
-            return dynamicSecurityService != null;
-        }
-    }
 
 
     @Override

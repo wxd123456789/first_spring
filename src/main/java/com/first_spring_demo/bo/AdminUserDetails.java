@@ -2,11 +2,9 @@ package com.first_spring_demo.bo;
 
 import com.first_spring_demo.mbg.model.UmsAdmin;
 import com.first_spring_demo.mbg.model.UmsResource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
@@ -27,9 +25,9 @@ public class AdminUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        //返回当前用户的角色
+        //返回当前用户拥有的资源resources  admin-->role-->resources
         return resourceList.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getId() + ":" + role.getName()))
+                .map(resource -> new SimpleGrantedAuthority(resource.getId() + ":" + resource.getName()))
                 .collect(Collectors.toList());
     }
 

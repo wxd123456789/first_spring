@@ -8,7 +8,7 @@ import com.first_spring_demo.mbg.model.UmsAdmin;
 import com.first_spring_demo.mbg.model.UmsAdminRoleRelation;
 import com.first_spring_demo.mbg.model.UmsAdminRoleRelationExample;
 import com.first_spring_demo.mbg.model.UmsResource;
-import com.first_spring_demo.service.RedisService;
+import com.first_spring_demo.common.utils.RedisService;
 import com.first_spring_demo.service.UmsAdminCacheService;
 import com.first_spring_demo.service.UmsAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
