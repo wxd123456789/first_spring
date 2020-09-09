@@ -1,6 +1,6 @@
 package com.first_spring_demo.service.impl;
 
-
+import com.github.pagehelper.PageHelper;
 import cn.hutool.core.collection.CollUtil;
 import com.first_spring_demo.bo.AdminUserDetails;
 import com.first_spring_demo.common.utils.JwtTokenUtil;
@@ -22,6 +22,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -105,6 +106,18 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     @Override
     public UmsAdmin getItem(Long id) {
         return adminMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public List<UmsAdmin> list(String keyword, Integer pageSize, Integer pageNum) {
+        PageHelper.startPage(pageNum, pageSize);
+        UmsAdminExample example = new UmsAdminExample();
+        UmsAdminExample.Criteria criteria = example.createCriteria();
+        if (!StringUtils.isEmpty(keyword)) {
+            criteria.andUsernameLike("%" + keyword + "%");
+            example.or(example.createCriteria().andNickNameLike("%" + keyword + "%"));
+        }
+        return adminMapper.selectByExample(example);
     }
 
 }

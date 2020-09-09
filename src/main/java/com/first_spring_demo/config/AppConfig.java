@@ -1,8 +1,10 @@
 package com.first_spring_demo.config;
 
 import com.first_spring_demo.common.exception.MallException;
+import com.github.pagehelper.PageInterceptor;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.apache.ibatis.plugin.Interceptor;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
@@ -23,6 +25,7 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 @Configuration
 @ComponentScan(basePackages = "com.first_spring_demo")
@@ -58,6 +61,7 @@ public class AppConfig implements WebMvcConfigurer {
     SqlSessionFactoryBean createSqlSessionFactory(
             @Autowired DataSource dataSource,
             @Value("#{'${mapper-locations}'.split(';')}") List<String> mapperLocations) {
+        // dataSource
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
         // mapper xml location
@@ -72,6 +76,15 @@ public class AppConfig implements WebMvcConfigurer {
         } catch (IOException e) {
             throw new MallException("get xml mapper Resources failed");
         }
+        //support PageHelper
+        PageInterceptor page = new PageInterceptor();
+        Properties properties = new Properties();
+        properties.setProperty("helperDialect", "mysql");
+        properties.setProperty("reasonable", "true");
+        properties.setProperty("supportMethodsArguments", "true");
+        properties.setProperty("params", "count=countSql");
+        page.setProperties(properties);
+        sqlSessionFactoryBean.setPlugins(new Interceptor[]{page});
         return sqlSessionFactoryBean;
     }
 
