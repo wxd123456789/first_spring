@@ -79,4 +79,7 @@
                 LEFT JOIN ums_admin_role_relation ar ON rr.role_id = ar.role_id
         WHERE rr.resource_id=#{resourceId}
     </select>
+    <delete id="deleteAdminRoleRelation">
+        DELETE FROM ums_admin_role_relation WHERE admin_id = #{adminId}
+    </delete>
 </mapper>

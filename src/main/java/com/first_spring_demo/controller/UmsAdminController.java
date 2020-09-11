@@ -3,7 +3,9 @@ package com.first_spring_demo.controller;
 import com.first_spring_demo.common.api.CommonPage;
 import com.first_spring_demo.common.api.Response;
 import com.first_spring_demo.dto.UmsAdminLoginParam;
+import com.first_spring_demo.dto.UmsAdminParam;
 import com.first_spring_demo.mbg.model.UmsAdmin;
+import com.first_spring_demo.mbg.model.UmsRole;
 import com.first_spring_demo.service.UmsAdminService;
 import com.first_spring_demo.service.UmsRoleService;
 import io.swagger.annotations.Api;
@@ -74,9 +76,74 @@ public class UmsAdminController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
     public Response<CommonPage<UmsAdmin>> list(@RequestParam(value = "keyword", required = false) String keyword,
-                                                   @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
-                                                   @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
+                                               @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+                                               @RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum) {
         List<UmsAdmin> adminList = adminService.list(keyword, pageSize, pageNum);
         return Response.success(CommonPage.restPage(adminList));
+    }
+
+    @ApiOperation("获取指定用户信息")
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public Response<UmsAdmin> getItem(@PathVariable Long id) {
+        UmsAdmin admin = adminService.getItem(id);
+        return Response.success(admin);
+    }
+
+    @ApiOperation(value = "用户注册")
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @ResponseBody
+    public Response<UmsAdmin> register(@RequestBody UmsAdminParam umsAdminParam, BindingResult result) {
+        try {
+            UmsAdmin umsAdmin = adminService.register(umsAdminParam);
+            return Response.success(umsAdmin);
+        } catch (Exception e) {
+            return Response.failed(e.getMessage());
+        }
+    }
+
+    @ApiOperation("给用户分配角色")
+    @RequestMapping(value = "/role/update", method = RequestMethod.POST)
+    @ResponseBody
+    public Response updateRole(@RequestParam("adminId") Long adminId,
+                               @RequestParam("roleIds") List<Long> roleIds) {
+        try {
+            int count = adminService.updateRole(adminId, roleIds);
+            return Response.success(count);
+        } catch (Exception e) {
+            return Response.failed(e.getMessage());
+        }
+    }
+
+    @ApiOperation("获取指定用户的角色")
+    @RequestMapping(value = "/role/{adminId}", method = RequestMethod.GET)
+    @ResponseBody
+    public Response<List<UmsRole>> getRoleList(@PathVariable Long adminId) {
+        List<UmsRole> roleList = adminService.getRoleList(adminId);
+        return Response.success(roleList);
+    }
+
+    @ApiOperation("修改指定用户信息")
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public Response update(@PathVariable Long id, @RequestBody UmsAdmin admin) {
+        try {
+            int count = adminService.update(id, admin);
+            return Response.success(count);
+        } catch (Exception e) {
+            return Response.failed(e.getMessage());
+        }
+    }
+
+    @ApiOperation("删除指定用户信息")
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public Response delete(@PathVariable Long id) {
+        try {
+            adminService.delete(id);
+            return Response.success(String.format("delete admin id[%s] success", id));
+        } catch (Exception e) {
+            return Response.failed(e.getMessage());
+        }
     }
 }

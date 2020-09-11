@@ -41,4 +41,9 @@ public interface UmsAdminRoleRelationDao {
      * 获取资源相关用户ID列表
      */
     List<Long> getAdminIdList(@Param("resourceId") Long resourceId);
+
+    /**
+     * deleteAdminRoleRelation
+     */
+    int deleteAdminRoleRelation(@Param("adminId") Long adminId);
 }

@@ -1,18 +1,21 @@
 package com.first_spring_demo.service.impl;
 
-import com.github.pagehelper.PageHelper;
 import cn.hutool.core.collection.CollUtil;
 import com.first_spring_demo.bo.AdminUserDetails;
+import com.first_spring_demo.common.exception.MallException;
 import com.first_spring_demo.common.utils.JwtTokenUtil;
 import com.first_spring_demo.dao.UmsAdminRoleRelationDao;
+import com.first_spring_demo.dto.UmsAdminParam;
 import com.first_spring_demo.mbg.mapper.UmsAdminMapper;
-import com.first_spring_demo.mbg.model.UmsAdmin;
-import com.first_spring_demo.mbg.model.UmsAdminExample;
-import com.first_spring_demo.mbg.model.UmsResource;
+import com.first_spring_demo.mbg.mapper.UmsAdminRoleRelationMapper;
+import com.first_spring_demo.mbg.mapper.UmsRoleMapper;
+import com.first_spring_demo.mbg.model.*;
 import com.first_spring_demo.service.UmsAdminCacheService;
 import com.first_spring_demo.service.UmsAdminService;
+import com.github.pagehelper.PageHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,8 +25,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,6 +44,10 @@ public class UmsAdminServiceImpl implements UmsAdminService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private UmsAdminMapper adminMapper;
+    @Autowired
+    private UmsRoleMapper umsRoleMapper;
+    @Autowired
+    private UmsAdminRoleRelationMapper adminRoleRelationMapper;
     @Autowired
     private UmsAdminRoleRelationDao adminRoleRelationDao;
     @Autowired
@@ -72,11 +82,31 @@ public class UmsAdminServiceImpl implements UmsAdminService {
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
             token = jwtTokenUtil.generateToken(userDetails);
-            //insertLoginLog1(username);
         } catch (AuthenticationException e) {
             LOGGER.warn("登录异常:{}", e.getMessage());
         }
         return token;
+    }
+
+    @Override
+    public UmsAdmin register(UmsAdminParam umsAdminParam) {
+        UmsAdmin umsAdmin = new UmsAdmin();
+        BeanUtils.copyProperties(umsAdminParam, umsAdmin);
+        umsAdmin.setCreateTime(new Date());
+        umsAdmin.setStatus(1);
+        //查询是否有相同用户名的用户
+        String userName = umsAdmin.getUsername();
+        UmsAdminExample example = new UmsAdminExample();
+        example.createCriteria().andUsernameEqualTo(userName);
+        List<UmsAdmin> umsAdminList = adminMapper.selectByExample(example);
+        if (umsAdminList.size() > 0) {
+            throw new MallException(String.format("Name[%s] already exists", userName));
+        }
+        //将密码进行加密操作
+        String encodePassword = passwordEncoder.encode(umsAdmin.getPassword());
+        umsAdmin.setPassword(encodePassword);
+        adminMapper.insert(umsAdmin);
+        return umsAdmin;
     }
 
     @Override
@@ -120,4 +150,65 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         return adminMapper.selectByExample(example);
     }
 
+    @Override
+    public int updateRole(Long adminId, List<Long> roleIds) {
+        // pre check
+        UmsAdminExample umsAdminExample = new UmsAdminExample();
+        umsAdminExample.createCriteria().andIdEqualTo(adminId);
+        if (this.adminMapper.selectByExample(umsAdminExample).size() == 0) {
+            throw new MallException(String.format("admin id[%s] not exists", adminId));
+        }
+        for (Long roleId : roleIds) {
+            UmsRoleExample umsRoleExample = new UmsRoleExample();
+            umsRoleExample.createCriteria().andIdEqualTo(roleId);
+            if (umsRoleMapper.selectByExample(umsRoleExample).size() == 0) {
+                throw new MallException(String.format("role id[%s] not exists", roleId));
+            }
+        }
+
+        //先删除原来的关系
+        UmsAdminRoleRelationExample adminRoleRelationExample = new UmsAdminRoleRelationExample();
+        adminRoleRelationExample.createCriteria().andAdminIdEqualTo(adminId);
+        adminRoleRelationMapper.deleteByExample(adminRoleRelationExample);
+        //建立新关系
+        if (!CollectionUtils.isEmpty(roleIds)) {
+            List<UmsAdminRoleRelation> list = new ArrayList<>();
+            for (Long roleId : roleIds) {
+                UmsAdminRoleRelation roleRelation = new UmsAdminRoleRelation();
+                roleRelation.setAdminId(adminId);
+                roleRelation.setRoleId(roleId);
+                list.add(roleRelation);
+            }
+            adminRoleRelationDao.insertList(list);
+        }
+        adminCacheService.delResourceList(adminId);
+        return roleIds == null ? 0 : roleIds.size();
+    }
+
+    @Override
+    public List<UmsRole> getRoleList(Long adminId) {
+        return adminRoleRelationDao.getRoleList(adminId);
+    }
+
+    @Override
+    public int update(Long id, UmsAdmin admin) {
+        UmsAdmin rawAdmin = adminMapper.selectByPrimaryKey(id);
+        if (rawAdmin == null) {
+            throw new MallException(String.format("admin id[%s] not exists", id));
+        }
+        //name  && email Unique check ...
+        admin.setId(id);
+        int count = adminMapper.updateByPrimaryKeySelective(admin);
+        adminCacheService.delAdmin(id);
+        return count;
+    }
+
+    @Override
+    public void delete(Long id) {
+        adminCacheService.delAdmin(id);
+        adminMapper.deleteByPrimaryKey(id);
+        adminRoleRelationDao.deleteAdminRoleRelation(id);
+        // role not exists--> related resources ...
+        adminCacheService.delResourceList(id);
+    }
 }

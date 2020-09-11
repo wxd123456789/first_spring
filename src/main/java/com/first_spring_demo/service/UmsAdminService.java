@@ -1,9 +1,12 @@
 package com.first_spring_demo.service;
 
+import com.first_spring_demo.dto.UmsAdminParam;
 import com.first_spring_demo.mbg.model.UmsAdmin;
 import com.first_spring_demo.mbg.model.UmsResource;
+import com.first_spring_demo.mbg.model.UmsRole;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,6 +20,18 @@ public interface UmsAdminService {
      * @return 生成的JWT的token
      */
     String login(String username, String password);
+
+    /**
+     * 注册功能
+     */
+    UmsAdmin register(UmsAdminParam umsAdminParam);
+
+
+    /**
+     * 修改用户角色关系
+     */
+    @Transactional
+    int updateRole(Long adminId, List<Long> roleIds);
 
 
     /**
@@ -44,4 +59,20 @@ public interface UmsAdminService {
      */
     List<UmsAdmin> list(String keyword, Integer pageSize, Integer pageNum);
 
+    /**
+     * 获取用户对于角色
+     */
+    List<UmsRole> getRoleList(Long adminId);
+
+
+    /**
+     * 修改指定用户信息
+     */
+    int update(Long id, UmsAdmin admin);
+
+
+    /**
+     * 删除指定用户
+     */
+    void delete(Long id);
 }
