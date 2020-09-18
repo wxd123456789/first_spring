@@ -4,6 +4,7 @@ import com.first_spring_demo.common.exception.MallException;
 import com.github.pagehelper.PageInterceptor;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.apache.ibatis.logging.stdout.StdOutImpl;
 import org.apache.ibatis.plugin.Interceptor;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
@@ -76,6 +77,10 @@ public class AppConfig implements WebMvcConfigurer {
         } catch (IOException e) {
             throw new MallException("get xml mapper Resources failed");
         }
+        // mybatis support StdOut type print sql, also has other type
+        org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
+        configuration.setLogImpl(StdOutImpl.class);
+        sqlSessionFactoryBean.setConfiguration(configuration);
         //support PageHelper
         PageInterceptor page = new PageInterceptor();
         Properties properties = new Properties();

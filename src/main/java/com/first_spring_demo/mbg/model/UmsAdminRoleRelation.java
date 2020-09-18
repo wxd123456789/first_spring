@@ -1,5 +1,6 @@
 package com.first_spring_demo.mbg.model;
 
+import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 
 public class UmsAdminRoleRelation implements Serializable {
