@@ -1,5 +1,6 @@
 package com.first_spring_demo.service.impl;
 
+import com.first_spring_demo.common.exception.MallException;
 import com.first_spring_demo.dao.UmsRoleDao;
 import com.first_spring_demo.dao.UmsRolePermissionRelationDao;
 import com.first_spring_demo.mbg.mapper.UmsRoleMapper;
@@ -12,6 +13,7 @@ import com.first_spring_demo.service.UmsRoleService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -40,6 +42,12 @@ public class UmsRoleServiceImpl implements UmsRoleService {
 
     @Override
     public int create(UmsRole role) {
+        UmsRoleExample umsRoleExample = new UmsRoleExample();
+        umsRoleExample.createCriteria().andNameEqualTo(role.getName());
+        List<UmsRole> umsRoleList = roleMapper.selectByExample(umsRoleExample);
+        if (!CollectionUtils.isEmpty(umsRoleList)) {
+            throw new MallException(String.format("Role[%s] exists", role.getName()));
+        }
         role.setCreateTime(new Date());
         role.setAdminCount(0);
         role.setSort(0);

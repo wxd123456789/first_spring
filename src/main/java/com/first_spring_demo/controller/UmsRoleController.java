@@ -29,11 +29,12 @@ public class UmsRoleController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
     public Response create(@RequestBody UmsRole role) {
-        int count = roleService.create(role);
-        if (count > 0) {
+        try {
+            int count = roleService.create(role);
             return Response.success(count);
+        } catch (Exception e) {
+            return Response.failed(e.getMessage());
         }
-        return Response.failed();
     }
 
     @ApiOperation("修改角色")
