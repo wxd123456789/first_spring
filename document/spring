@@ -1,0 +1,221 @@
+======================================Spring基础
+IoC容器：
+负责创建组件、销毁时，按依赖顺序正确销毁
+负责根据依赖关系组装组件
+组件以来关系：xml表示、注解
+常用注解：Configuration、Component、Service、、、
+
+条件装配：
+一般存在开发、测试和生产这3个环境。
+开发环境使用内存数据库以便快速启动。生产环境使用MySQL数据库
+文件存储，假设我们需要保存用户上传的头像，并返回存储路径。在本地开发运行时，我们总是存储到文件，在生产环境运行时，我们会把文件存储到类似AWS S3上
+@Profile、@Conditional、@ConditionalOnProperty
+
+AOP:
+AOP:本质就是一个动态代理，通过CGLIB动态创建子类等方式来实现AOP代理模式，实现一些常用功能如权限检查、日志、事务等。
+正确使用AOP原则：
+访问被注入的Bean时，总是调用方法而非直接访问字段；
+编写Bean时，如果可能会被代理，就不要编写public final方法。
+
+访问数据库：
+Spring提供的JdbcTemplate和全自动ORM框架Hibernate差别：
+JdbcTemplate查询后需要手动提供Mapper实例以便把ResultSet的每一行变为Java对象；
+JdbcTemplate增删改操作所需的参数列表，需要手动传入，代码比较繁琐，构造sql复杂；
+JdbcTemplate的优势在于它的确定性：即每次读取操作一定是数据库操作而不是缓存，所执行的SQL是完全确定的。
+
+介于半自动的ORM框架MyBatis：只负责把ResultSet自动映射到Java Bean，或者自动填充Java Bean参数，但仍需自己写出SQL。
+MyBatis使用Mapper来实现映射。User类、users表、两者之间映射的UserMapper。
+
+MyBatis缺点是所有SQL都需要全部手写；
+优点是执行的SQL就是我们自己写的SQL，对SQL进行优化非常简单，也可以编写任意复杂的SQL，或者使用数据库的特定语法，但切换数据库可能就不太容易。
+
+HikariCP：Ultimate JDBC Connection Pool
+
+==Spring事务
+Spring提供PlatformTransactionManager来表示事务管理器，所有的事务都由它负责管理，为了同时支持JDBC和JTA两种事务模型，抽象出该类模型。
+JavaEE提供JDBC事务和分布式事务JTA（Java Transaction API）。
+分布式事务是指多个数据源（比如多个数据库，多个消息系统）在分布式环境下实现事务。
+通过一个分布式事务管理器实现两阶段提交，但本身数据库事务就不快，基于数据库事务实现的分布式事务效率低，使用率不高。
+使用方法：
+AppConfig中定义PlatformTransactionManager的Bean、加上注解@EnableTransactionManagement启用声明式事务、对需要事务支持的组件或方法，加上@Transactional注解
+事务的其它概念：
+回滚事务、事务传播级别、事务边界
+
+==SpringTask定时异步任务
+Spring异步任务处理：
+1、使用线程池，创建新的线程去处理
+2、SpringBoot，controller上加上@EnableAsync注解，异步执行的方法上加上@Async注解
+
+======================================Spring AOP
+==相关术语：
+通知（Advice）
+通知描述了切面要完成的工作以及何时执行。
+前置通知（Before）：在目标方法调用前调用通知功能；
+后置通知（After）：在目标方法调用之后调用通知功能，不管方法成功或异常；
+返回通知（AfterReturning）：在目标方法成功执行之后调用通知功能；
+异常通知（AfterThrowing）：在目标方法抛出异常后调用通知功能；
+环绕通知（Around）：通知包裹了目标方法，在目标方法调用之前和之后执行自定义的行为。
+
+连接点（JoinPoint）
+通知功能被应用的时机。比如接口方法被调用的时候就是日志切面的连接点。
+
+切点（Pointcut）
+切点定义了通知功能被应用的范围。比如日志切面的应用范围就是所有接口，即所有controller层的接口方法。
+
+切面（Aspect）
+切面是通知和切点的结合，定义了何时、何地应用通知功能。
+
+引入（Introduction）
+在无需修改现有类的情况下，向现有的类添加新方法或属性。
+
+织入（Weaving）
+把切面应用到目标对象并创建新的代理对象的过程。
+
+使用注解创建切面，相关注解：
+@Aspect：用于定义切面
+@Before：通知方法会在目标方法调用之前执行
+@After：通知方法会在目标方法返回或抛出异常后执行
+@AfterReturning：通知方法会在目标方法返回后执行
+@AfterThrowing：通知方法会在目标方法抛出异常后执行
+@Around：通知方法会将目标方法封装起来
+@Pointcut：定义切点表达式，切点表达式用来指定了通知被应用的范围，表达式格式：execution(方法修饰符 返回类型 方法所属的包.类名.方法名称(方法参数)
+
+==应用
+需求：rest请求到controller，日志打印请求的数据包，AOP记录接口访问日志记录。
+应用组件EKL，整合ELK实现日志收集：
+Elasticsearch:用于存储收集到的日志信息；
+Logstash:用于收集日志，SpringBoot应用整合了Logstash以后会把日志发送给Logstash,Logstash再把日志转发给Elasticsearch；
+Kibana:通过Web端的可视化界面来查看日志。
+
+==log组件：
+Commons Logging、Log4j
+SLF4J日志打印写法简单点、Logback，性能好点
+logback配置: logback.xml
+http://logback.qos.ch/manual/layouts.html
+
+=========================================spring mvc 
+Servlet容器中启动Spring容器的方法：
+Listener启动、Servlet启动、使用XML配置、使用注解配置
+web应用启动详细过程：
+启动Servlet容器；
+Servlet容器读取web.xml并初始化DispatcherServlet；
+DispatcherServlet启动后，根据配置AppConfig创建IoC容器，完成所有Bean的初始化，并将创建的该IoC容器自动注册到ServletContext中。
+浏览器发出的HTTP请求全部由DispatcherServlet接收，根据配置转发到指定Controller的指定方法处理。Controller处理完成后，根据返回的ModelAndView决定如何渲染页面。
+
+rest api：
+使用@RestController注解。Jackson序列化或反序列化为JSON
+ServletContext、HttpSession、HttpServletRequest&&HttpServletResponse  作用范围从大到下
+ServletContext：整个应用范围的，可以完成跨会话共享数据
+HttpSession一个会话:浏览器开启到关闭
+HttpServletRequest：一次请求
+
+Filter与拦截器Interceptor：
+Filter是Servlet规范中的
+和Filter相比，Interceptor拦截范围不是后续整个处理流程，而是仅针对Controller拦截。Interceptor本身是Spring管理的Bean，注入任意Bean方便。
+
+CORS：
+跨域访问，浏览器拒绝访问，不满足同源策略：
+同源要求域名要完全相同（a.com和www.a.com不同），协议要相同（http和https不同），端口要相同 。
+在域名a.com页面调用B站b.com的rest API办法：
+CORS Cross-Origin Resource Sharing，HTML5规范定义的如何跨域访问资源。
+A站访问B站rest API的时候，B站能够返回响应头Access-Control-Allow-Origin: http://a.com，那么，浏览器就允许A站访问B站的rest API。
+跨域访问能否成功，取决于B站是否愿意给A站返回一个正确的Access-Control-Allow-Origin响应头，决定权永远在提供API的服务方手中。
+
+i18：
+异步处理：
+WebSocket：
+WebSocket是一种基于HTTP的长链接技术，基于http封装的，建立连接后保持。传统的HTTP协议是一种请求-响应模型，如果浏览器不发送请求，那么服务器无法主动给浏览器推送数据。
+场景：股票行情、在线聊天。
+
+==配置：
+application-context.xml是全局的，应用于多个serverlet，配合listener一起使用
+spring-mvc.xml 是spring mvc的配置application-context.xml这个一般是采用非spring mvc架构，用来加载Application Context。
+如果直接采用SpringMVC，只需要把所有相关配置放到spring-mvc.xml中就好，一般spring mvc项目用不到多个serverlet。
+
+application-context.xml配置：
+启动一个项目的整体流程：
+tomcat启动一个WEB项目的时候，WEB容器会去读取它的配置文件web.xml，读取<listener>和<context-param>两个结点。
+紧接着，容器创建一个ServletContext（servlet上下文，全局的），这个web项目的所有部分都将共享这个上下文。可以把ServletContext看成是一个Web应用的服务器端组件的共享内存，在ServletContext中可以存放共享数据。ServletContext对象是真正的一个全局对象，凡是web容器中的Servlet都可以访问
+容器将<context-param>转换为键值对，并交给servletContext。
+容器创建<listener>中的类实例，创建监听器。  listener中ContextLoaderListener监听器的作用就是启动Web容器时，监听servletContext对象的变化，获取servletContext对象的<context-param>，来自动装配ApplicationContext的配置信息。（即加载applicationContext.xml文件）
+
+sping-mvc.xml的配置：
+web项目启动时，读取web.xml配置文件，首先解析的是applicationContext.xml文件，其次才是sping-mvc.xml文件，
+sping-mvc.xml文件中主要的工作是：启动注解、扫描controller包注解；静态资源映射；视图解析（defaultViewResolver）；文件上传（multipartResolver）;返回消息json配置。
+
+=========================================spring security
+==SecurityContextHolder工作模式
+默认MODE_THREADLOCAL：
+使用了ThreadLocal机制来保存每个使用者的安全上下文，只要针对某个使用者的逻辑执行都是在同一个线程中进行，即使不在各个方法之间以参数的形式传递，也能通过SecurityContextHolder获取到该安全上下文。
+只要在处理完当前使用者的请求之后注意清除ThreadLocal中的安全上下文，这些工作框架自动帮完成了。
+一个Servlet request的处理不管经历了多少个Filter，自始至终都由同一个线程来完成。
+
+MODE_GLOBAL：
+有一些应用并不适合使用ThreadLocal模式，有些场景可能希望JVM中所有的线程使用同一个安全上下文。
+对于同一个使用者的不同Servlet request，它们在服务端被处理时，使用的可不一定是同一个线程。
+
+MODE_INHERITABLETHREADLOCAL：
+其他的一些应用会有自己的线程创建，并且希望这些新建线程也能使用创建者的安全上下文。
+
+==Filter
+chain.doFilter(request,response)
+将请求转发给过滤器链上下一个filter对象。如果没有就是请求的controller
+request -> filter1 -> filter2 ->filter3 -> .... -> request resource controller
+
+==========================================spring常用注解
+==@Service、@Repository、@Component
+表明：这些类由spring ioc容器管理；
+==@Bean、@Autowired
+@Bean告诉Spring这是此类的一个实例，请保留它，并在我询问时将其还给我。
+@Autowired告诉Spring请给我一个此类的实例，例如之前用@Bean注释创建的一个实例。在一个类中定义了@Bean，而在另一个类中定义@Autowired使用该类的实例。
+要使用Spring管理的Bean，可以通过@Autowired或者@Resource。@Autowired是按照类型，@Resource是按照名称
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
