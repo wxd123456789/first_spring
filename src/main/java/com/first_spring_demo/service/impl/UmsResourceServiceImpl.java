@@ -6,6 +6,7 @@ import com.first_spring_demo.mbg.model.UmsResource;
 import com.first_spring_demo.mbg.model.UmsResourceExample;
 import com.first_spring_demo.service.UmsAdminCacheService;
 import com.first_spring_demo.service.UmsResourceService;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -50,7 +51,7 @@ public class UmsResourceServiceImpl implements UmsResourceService {
 
     @Override
     public List<UmsResource> list(Long categoryId, String nameKeyword, String urlKeyword, Integer pageSize, Integer pageNum) {
-        //PageHelper.startPage(pageNum,pageSize);
+        PageHelper.startPage(pageNum,pageSize);
         UmsResourceExample example = new UmsResourceExample();
         UmsResourceExample.Criteria criteria = example.createCriteria();
         if (categoryId != null) {

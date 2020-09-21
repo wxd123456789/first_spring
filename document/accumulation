@@ -34,13 +34,10 @@ Java工具包，包括常用工具类和方法：Convert、DateUtil、StrUtil、
 # table record
 insert into  users (id, email, password, name, createdAt) values ((select LOCALTIMESTAMP()), "3042873385@qq.com", "1223ww3", "zzz", 1594537596942234);
 UPDATE users SET createdAt="123";
-
 # table field
 ALTER TABLE users MODIFY createdAt VARCHAR(100) NOT NULL DEFAULT "2020-8-15";
-
 # db
 drop database mall_test;
-
 
 =========================================DB底层
 ==数据库分页
@@ -89,7 +86,7 @@ Criteria：标准
 Stereotype：模式
 Nick name：昵称
 Credentials：资格
-
+Keyword：关键字
 
 
 
