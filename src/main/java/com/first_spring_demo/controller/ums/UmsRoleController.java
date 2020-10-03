@@ -1,4 +1,4 @@
-package com.first_spring_demo.controller;
+package com.first_spring_demo.controller.ums;
 
 import com.first_spring_demo.common.api.CommonPage;
 import com.first_spring_demo.common.api.Response;

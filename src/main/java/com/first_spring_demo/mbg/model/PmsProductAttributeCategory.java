@@ -3,41 +3,25 @@ package com.first_spring_demo.mbg.model;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 
-public class Users implements Serializable {
-    private String id;
-
-    private String email;
-
-    private String password;
+public class PmsProductAttributeCategory implements Serializable {
+    private Long id;
 
     private String name;
 
-    private String createdat;
+    @ApiModelProperty(value = "属性数量")
+    private Integer attributeCount;
+
+    @ApiModelProperty(value = "参数数量")
+    private Integer paramCount;
 
     private static final long serialVersionUID = 1L;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getName() {
@@ -48,12 +32,20 @@ public class Users implements Serializable {
         this.name = name;
     }
 
-    public String getCreatedat() {
-        return createdat;
+    public Integer getAttributeCount() {
+        return attributeCount;
     }
 
-    public void setCreatedat(String createdat) {
-        this.createdat = createdat;
+    public void setAttributeCount(Integer attributeCount) {
+        this.attributeCount = attributeCount;
+    }
+
+    public Integer getParamCount() {
+        return paramCount;
+    }
+
+    public void setParamCount(Integer paramCount) {
+        this.paramCount = paramCount;
     }
 
     @Override
@@ -63,10 +55,9 @@ public class Users implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", email=").append(email);
-        sb.append(", password=").append(password);
         sb.append(", name=").append(name);
-        sb.append(", createdat=").append(createdat);
+        sb.append(", attributeCount=").append(attributeCount);
+        sb.append(", paramCount=").append(paramCount);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
