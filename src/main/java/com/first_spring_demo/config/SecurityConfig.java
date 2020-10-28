@@ -1,11 +1,12 @@
 package com.first_spring_demo.config;
 
 import com.first_spring_demo.common.utils.JwtTokenUtil;
-import com.first_spring_demo.common.utils.Print;
 import com.first_spring_demo.component.*;
 import com.first_spring_demo.mbg.model.UmsResource;
 import com.first_spring_demo.service.UmsAdminService;
 import com.first_spring_demo.service.UmsResourceService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -39,6 +40,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
     @Value("#{'${secure.ignored.urls}'.split(';')}")
     private List<String> ignoreUrls;
     @Autowired
@@ -54,8 +56,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = httpSecurity
                 .authorizeRequests();
         //不需要保护的资源路径允许访问
+        logger.info("permit url: ");
         for (String url : ignoreUrls) {
-            Print.print(url);
+            logger.info(url);
             registry.antMatchers(url).permitAll();
         }
         //允许跨域请求的OPTIONS请求

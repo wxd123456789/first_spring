@@ -16,7 +16,7 @@ import java.io.File;
 public class Main {
     public static void main(String[] args) {
         try {
-            generateModelMapper();
+            //generateModelMapper();
             startWebServer();
         } catch (Exception e) {
             Print.print(e.getMessage());
