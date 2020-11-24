@@ -14,7 +14,7 @@
         </init-param>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>com.first_spring_demo.config.AppConfig</param-value>
+            <param-value>com.wxd.my_mall.config.AppConfig</param-value>
         </init-param>
         <load-on-startup>0</load-on-startup>
     </servlet>

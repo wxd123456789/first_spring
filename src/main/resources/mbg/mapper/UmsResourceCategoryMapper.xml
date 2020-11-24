@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.first_spring_demo.mbg.mapper.UmsResourceCategoryMapper">
-  <resultMap id="BaseResultMap" type="com.first_spring_demo.mbg.model.UmsResourceCategory">
+<mapper namespace="com.wxd.my_mall.mbg.mapper.UmsResourceCategoryMapper">
+  <resultMap id="BaseResultMap" type="com.wxd.my_mall.mbg.model.UmsResourceCategory">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="name" jdbcType="VARCHAR" property="name" />
@@ -68,7 +68,7 @@
   <sql id="Base_Column_List">
     id, create_time, name, sort
   </sql>
-  <select id="selectByExample" parameterType="com.first_spring_demo.mbg.model.UmsResourceCategoryExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.wxd.my_mall.mbg.model.UmsResourceCategoryExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -92,13 +92,13 @@
     delete from ums_resource_category
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.first_spring_demo.mbg.model.UmsResourceCategoryExample">
+  <delete id="deleteByExample" parameterType="com.wxd.my_mall.mbg.model.UmsResourceCategoryExample">
     delete from ums_resource_category
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.first_spring_demo.mbg.model.UmsResourceCategory">
+  <insert id="insert" parameterType="com.wxd.my_mall.mbg.model.UmsResourceCategory">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -107,7 +107,7 @@
     values (#{createTime,jdbcType=TIMESTAMP}, #{name,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.first_spring_demo.mbg.model.UmsResourceCategory">
+  <insert id="insertSelective" parameterType="com.wxd.my_mall.mbg.model.UmsResourceCategory">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -135,7 +135,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.first_spring_demo.mbg.model.UmsResourceCategoryExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.wxd.my_mall.mbg.model.UmsResourceCategoryExample" resultType="java.lang.Long">
     select count(*) from ums_resource_category
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -171,7 +171,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.first_spring_demo.mbg.model.UmsResourceCategory">
+  <update id="updateByPrimaryKeySelective" parameterType="com.wxd.my_mall.mbg.model.UmsResourceCategory">
     update ums_resource_category
     <set>
       <if test="createTime != null">
@@ -186,7 +186,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.first_spring_demo.mbg.model.UmsResourceCategory">
+  <update id="updateByPrimaryKey" parameterType="com.wxd.my_mall.mbg.model.UmsResourceCategory">
     update ums_resource_category
     set create_time = #{createTime,jdbcType=TIMESTAMP},
       name = #{name,jdbcType=VARCHAR},

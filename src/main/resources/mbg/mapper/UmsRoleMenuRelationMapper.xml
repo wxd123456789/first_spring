@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.first_spring_demo.mbg.mapper.UmsRoleMenuRelationMapper">
-  <resultMap id="BaseResultMap" type="com.first_spring_demo.mbg.model.UmsRoleMenuRelation">
+<mapper namespace="com.wxd.my_mall.mbg.mapper.UmsRoleMenuRelationMapper">
+  <resultMap id="BaseResultMap" type="com.wxd.my_mall.mbg.model.UmsRoleMenuRelation">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="role_id" jdbcType="BIGINT" property="roleId" />
     <result column="menu_id" jdbcType="BIGINT" property="menuId" />
@@ -67,7 +67,7 @@
   <sql id="Base_Column_List">
     id, role_id, menu_id
   </sql>
-  <select id="selectByExample" parameterType="com.first_spring_demo.mbg.model.UmsRoleMenuRelationExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.wxd.my_mall.mbg.model.UmsRoleMenuRelationExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -91,20 +91,20 @@
     delete from ums_role_menu_relation
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.first_spring_demo.mbg.model.UmsRoleMenuRelationExample">
+  <delete id="deleteByExample" parameterType="com.wxd.my_mall.mbg.model.UmsRoleMenuRelationExample">
     delete from ums_role_menu_relation
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.first_spring_demo.mbg.model.UmsRoleMenuRelation">
+  <insert id="insert" parameterType="com.wxd.my_mall.mbg.model.UmsRoleMenuRelation">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
     insert into ums_role_menu_relation (role_id, menu_id)
     values (#{roleId,jdbcType=BIGINT}, #{menuId,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="com.first_spring_demo.mbg.model.UmsRoleMenuRelation">
+  <insert id="insertSelective" parameterType="com.wxd.my_mall.mbg.model.UmsRoleMenuRelation">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -126,7 +126,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.first_spring_demo.mbg.model.UmsRoleMenuRelationExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.wxd.my_mall.mbg.model.UmsRoleMenuRelationExample" resultType="java.lang.Long">
     select count(*) from ums_role_menu_relation
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -158,7 +158,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.first_spring_demo.mbg.model.UmsRoleMenuRelation">
+  <update id="updateByPrimaryKeySelective" parameterType="com.wxd.my_mall.mbg.model.UmsRoleMenuRelation">
     update ums_role_menu_relation
     <set>
       <if test="roleId != null">
@@ -170,7 +170,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.first_spring_demo.mbg.model.UmsRoleMenuRelation">
+  <update id="updateByPrimaryKey" parameterType="com.wxd.my_mall.mbg.model.UmsRoleMenuRelation">
     update ums_role_menu_relation
     set role_id = #{roleId,jdbcType=BIGINT},
       menu_id = #{menuId,jdbcType=BIGINT}

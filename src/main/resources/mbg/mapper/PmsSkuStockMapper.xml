@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.first_spring_demo.mbg.mapper.PmsSkuStockMapper">
-  <resultMap id="BaseResultMap" type="com.first_spring_demo.mbg.model.PmsSkuStock">
+<mapper namespace="com.wxd.my_mall.mbg.mapper.PmsSkuStockMapper">
+  <resultMap id="BaseResultMap" type="com.wxd.my_mall.mbg.model.PmsSkuStock">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="product_id" jdbcType="BIGINT" property="productId" />
     <result column="sku_code" jdbcType="VARCHAR" property="skuCode" />
@@ -76,7 +76,7 @@
     id, product_id, sku_code, price, stock, low_stock, pic, sale, promotion_price, lock_stock, 
     sp_data
   </sql>
-  <select id="selectByExample" parameterType="com.first_spring_demo.mbg.model.PmsSkuStockExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.wxd.my_mall.mbg.model.PmsSkuStockExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -100,13 +100,13 @@
     delete from pms_sku_stock
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.first_spring_demo.mbg.model.PmsSkuStockExample">
+  <delete id="deleteByExample" parameterType="com.wxd.my_mall.mbg.model.PmsSkuStockExample">
     delete from pms_sku_stock
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.first_spring_demo.mbg.model.PmsSkuStock">
+  <insert id="insert" parameterType="com.wxd.my_mall.mbg.model.PmsSkuStock">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -119,7 +119,7 @@
       #{sale,jdbcType=INTEGER}, #{promotionPrice,jdbcType=DECIMAL}, #{lockStock,jdbcType=INTEGER}, 
       #{spData,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.first_spring_demo.mbg.model.PmsSkuStock">
+  <insert id="insertSelective" parameterType="com.wxd.my_mall.mbg.model.PmsSkuStock">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -189,7 +189,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.first_spring_demo.mbg.model.PmsSkuStockExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.wxd.my_mall.mbg.model.PmsSkuStockExample" resultType="java.lang.Long">
     select count(*) from pms_sku_stock
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -253,7 +253,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.first_spring_demo.mbg.model.PmsSkuStock">
+  <update id="updateByPrimaryKeySelective" parameterType="com.wxd.my_mall.mbg.model.PmsSkuStock">
     update pms_sku_stock
     <set>
       <if test="productId != null">
@@ -289,7 +289,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.first_spring_demo.mbg.model.PmsSkuStock">
+  <update id="updateByPrimaryKey" parameterType="com.wxd.my_mall.mbg.model.PmsSkuStock">
     update pms_sku_stock
     set product_id = #{productId,jdbcType=BIGINT},
       sku_code = #{skuCode,jdbcType=VARCHAR},

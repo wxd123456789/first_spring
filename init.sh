@@ -12,5 +12,5 @@ for i in ${springs[*]};do class_path=$class_path:$i;done
 #echo "${class_path}"
 
 
-#java -cp $class_path com.first_spring_demo.config.AppConfig
-java -cp $class_path com.first_spring_demo.Main
+#java -cp $class_path com.wxd.my_mall.config.AppConfig
+java -cp $class_path com.wxd.my_mall.Main

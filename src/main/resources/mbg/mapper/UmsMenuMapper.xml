@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.first_spring_demo.mbg.mapper.UmsMenuMapper">
-  <resultMap id="BaseResultMap" type="com.first_spring_demo.mbg.model.UmsMenu">
+<mapper namespace="com.wxd.my_mall.mbg.mapper.UmsMenuMapper">
+  <resultMap id="BaseResultMap" type="com.wxd.my_mall.mbg.model.UmsMenu">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="parent_id" jdbcType="BIGINT" property="parentId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -73,7 +73,7 @@
   <sql id="Base_Column_List">
     id, parent_id, create_time, title, level, sort, name, icon, hidden
   </sql>
-  <select id="selectByExample" parameterType="com.first_spring_demo.mbg.model.UmsMenuExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.wxd.my_mall.mbg.model.UmsMenuExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -97,13 +97,13 @@
     delete from ums_menu
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.first_spring_demo.mbg.model.UmsMenuExample">
+  <delete id="deleteByExample" parameterType="com.wxd.my_mall.mbg.model.UmsMenuExample">
     delete from ums_menu
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.first_spring_demo.mbg.model.UmsMenu">
+  <insert id="insert" parameterType="com.wxd.my_mall.mbg.model.UmsMenu">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -114,7 +114,7 @@
       #{level,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
       #{icon,jdbcType=VARCHAR}, #{hidden,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.first_spring_demo.mbg.model.UmsMenu">
+  <insert id="insertSelective" parameterType="com.wxd.my_mall.mbg.model.UmsMenu">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
       SELECT LAST_INSERT_ID()
     </selectKey>
@@ -172,7 +172,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.first_spring_demo.mbg.model.UmsMenuExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="com.wxd.my_mall.mbg.model.UmsMenuExample" resultType="java.lang.Long">
     select count(*) from ums_menu
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -228,7 +228,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.first_spring_demo.mbg.model.UmsMenu">
+  <update id="updateByPrimaryKeySelective" parameterType="com.wxd.my_mall.mbg.model.UmsMenu">
     update ums_menu
     <set>
       <if test="parentId != null">
@@ -258,7 +258,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.first_spring_demo.mbg.model.UmsMenu">
+  <update id="updateByPrimaryKey" parameterType="com.wxd.my_mall.mbg.model.UmsMenu">
     update ums_menu
     set parent_id = #{parentId,jdbcType=BIGINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},

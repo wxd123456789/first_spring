@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.first_spring_demo.dao.UmsRoleDao">
+<mapper namespace="com.wxd.my_mall.dao.UmsRoleDao">
 
-    <select id="getMenuList" resultType="com.first_spring_demo.mbg.model.UmsMenu">
+    <select id="getMenuList" resultType="com.wxd.my_mall.mbg.model.UmsMenu">
         SELECT m.id          id,
                m.parent_id   parentId,
                m.create_time createTime,
@@ -20,7 +20,7 @@
           AND m.id IS NOT NULL
         GROUP BY m.id
     </select>
-    <select id="getMenuListByRoleId" resultType="com.first_spring_demo.mbg.model.UmsMenu">
+    <select id="getMenuListByRoleId" resultType="com.wxd.my_mall.mbg.model.UmsMenu">
         SELECT m.id          id,
                m.parent_id   parentId,
                m.create_time createTime,
@@ -36,7 +36,7 @@
           AND m.id IS NOT NULL
         GROUP BY m.id
     </select>
-    <select id="getResourceListByRoleId" resultType="com.first_spring_demo.mbg.model.UmsResource">
+    <select id="getResourceListByRoleId" resultType="com.wxd.my_mall.mbg.model.UmsResource">
         SELECT r.id          id,
                r.create_time createTime,
                r.`name`      `name`,

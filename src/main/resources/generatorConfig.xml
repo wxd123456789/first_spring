@@ -15,7 +15,7 @@
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
         <!--生成mapper.xml时覆盖原文件-->
         <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin"/>
-        <commentGenerator type="com.first_spring_demo.mbg.CommentGenerator">
+        <commentGenerator type="com.wxd.my_mall.mbg.CommentGenerator">
             <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
             <property name="suppressAllComments" value="true"/>
             <property name="suppressDate" value="true"/>
@@ -28,11 +28,11 @@
             <property name="nullCatalogMeansCurrent" value="true"/>
         </jdbcConnection>
 
-        <javaModelGenerator targetPackage="com.first_spring_demo.mbg.model" targetProject="src/main/java/"/>
+        <javaModelGenerator targetPackage="com.wxd.my_mall.mbg.model" targetProject="src/main/java/"/>
 
         <sqlMapGenerator targetPackage="mbg.mapper" targetProject="src/main/resources"/>
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.first_spring_demo.mbg.mapper"
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.wxd.my_mall.mbg.mapper"
                              targetProject="src/main/java/"/>
         <!--生成ums开头的表，sql通配符%-->
         <table tableName="pms%">
