@@ -7,13 +7,14 @@
     <groupId>com.wxd.my_mall</groupId>
     <artifactId>my_mall</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.compiler.source>14</maven.compiler.source>
-        <maven.compiler.target>14</maven.compiler.target>
-        <java.version>14</java.version>
+        <java.version>1.8</java.version>
+        <!-- tell Maven to use Java 8, otherwise error is reported-->
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
         <spring.version>5.2.3.RELEASE</spring.version>
         <mybatis.version>3.4.6</mybatis.version>
         <mybatis-spring.version>2.0.4</mybatis-spring.version>
@@ -342,16 +343,4 @@
             <version>${aliyun-oss.version}</version>
         </dependency>
     </dependencies>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>13</source>
-                    <target>13</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>

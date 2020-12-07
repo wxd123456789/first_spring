@@ -25,6 +25,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -71,10 +72,11 @@ public class AppConfig implements WebMvcConfigurer {
             List<Resource> resources = new ArrayList<>();
             for (String location : mapperLocations) {
                 //getResources support reg (much mapper xml s), But getResource only support one resource file
-                resources.addAll(List.of(resolver.getResources(location)));
+                Resource[] res = resolver.getResources(location);
+                resources.addAll(Arrays.asList(res));
             }
             sqlSessionFactoryBean.setMapperLocations(resources.toArray(new Resource[resources.size()]));
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new MallException("get xml mapper Resources failed");
         }
         // mybatis support StdOut type print sql, also has other type
