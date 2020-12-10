@@ -21,7 +21,7 @@
 
     <servlet-mapping>
         <servlet-name>myServlet</servlet-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
     <!--use servlet filter -->

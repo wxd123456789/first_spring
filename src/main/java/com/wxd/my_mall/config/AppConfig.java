@@ -43,6 +43,7 @@ public class AppConfig implements WebMvcConfigurer {
     @Bean
     DataSource createDataSource(
             @Value("${jdbc.url}") String jdbcUrl,
+            @Value("${jdbc.driverClass}") String driverClass,
             @Value("${jdbc.username}") String jdbcUsername,
             @Value("${jdbc.password}") String jdbcPassword,
             @Value("${pool.autoCommit}") String autoCommit,
@@ -51,6 +52,7 @@ public class AppConfig implements WebMvcConfigurer {
     ) {
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl(jdbcUrl);
+        config.setDriverClassName(driverClass);
         config.setUsername(jdbcUsername);
         config.setPassword(jdbcPassword);
         config.addDataSourceProperty("autoCommit", autoCommit);
