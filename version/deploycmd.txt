@@ -1,0 +1,26 @@
+
+===mysql
+
+
+
+===redis
+docker run \
+-p 6379:6379 \
+-v /mydata/redis/data/:/data \
+-v /home/wxd/redis.conf:/etc/redis/redis.conf \
+--privileged=true \
+--name myredis \
+-d redis:5 redis-server /etc/redis/redis.conf
+
+===nginx
+docker run -p 80:80 --name nginx \
+-v /mydata/nginx/html:/usr/share/nginx/html \
+-v /mydata/nginx/logs:/var/log/nginx  \
+-v /mydata/nginx/conf:/etc/nginx \
+-d nginx:1.10
+
+
+===kafka
+
+
+===es
