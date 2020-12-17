@@ -82,9 +82,9 @@ public class AppConfig implements WebMvcConfigurer {
             throw new MallException("get xml mapper Resources failed");
         }
         // mybatis support StdOut type print sql, also has other type
-        org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
+/*        org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
         configuration.setLogImpl(StdOutImpl.class);
-        sqlSessionFactoryBean.setConfiguration(configuration);
+        sqlSessionFactoryBean.setConfiguration(configuration);*/
         //support PageHelper
         PageInterceptor page = new PageInterceptor();
         Properties properties = new Properties();

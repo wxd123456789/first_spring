@@ -34,7 +34,7 @@ public class OssController {
     }
 
     @ApiOperation(value = "oss上传成功回调")
-    @RequestMapping(value = "callback", method = RequestMethod.POST)
+    @RequestMapping(value = "/callback", method = RequestMethod.POST)
     @ResponseBody
     public Response<OssCallbackResult> callback(HttpServletRequest request) {
         OssCallbackResult ossCallbackResult = ossService.callback(request);

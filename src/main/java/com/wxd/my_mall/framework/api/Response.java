@@ -124,4 +124,9 @@ public class Response<T> {
     public void setData(T data) {
         this.data = data;
     }
+
+    @Override
+    public String toString(){
+        return String.format("Response[status=%s, msg=%s]", code, message);
+    }
 }

@@ -42,7 +42,6 @@ public class UmsAdminController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UmsAdminController.class);
 
-
     @ApiOperation(value = "登录以后返回token")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
