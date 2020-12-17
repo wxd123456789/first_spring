@@ -32,7 +32,7 @@ import java.util.Properties;
 @Configuration
 @ComponentScan(basePackages = "com.wxd.my_mall")
 @MapperScan({"com.wxd.my_mall.mbg.mapper", "com.wxd.my_mall.dao"})
-@PropertySource("classpath:application.properties")
+@PropertySource("classpath:application-${profilesActive}.properties")
 @EnableAspectJAutoProxy // support aop
 @EnableTransactionManagement
 @EnableWebMvc

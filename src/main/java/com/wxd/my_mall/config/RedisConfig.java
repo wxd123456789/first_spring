@@ -31,7 +31,7 @@ import java.time.Duration;
 @EnableCaching
 @Configuration
 @EnableRedisRepositories
-@PropertySource("classpath:application.properties")
+@PropertySource("classpath:application-${profilesActive}.properties")
 public class RedisConfig extends CachingConfigurerSupport {
     @Bean
     public JedisPoolConfig jedisPoolConfig(@Value("${redis.maxIdle}") Integer maxIdle,

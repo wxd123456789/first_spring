@@ -3,6 +3,9 @@
 
 mvn compile
 
+# dev test prod
+export profilesActive=dev
+
 # different version pkg conflict
 class_path="./target/classes/"
 
