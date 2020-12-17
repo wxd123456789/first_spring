@@ -85,7 +85,7 @@ public class OssServiceImpl implements OssService {
         return result;
     }
 
-    /*返回文件的存储url?*/
+    // 返回文件在远端阿里oss的存储url
     @Override
     public OssCallbackResult callback(HttpServletRequest request) {
         OssCallbackResult result = new OssCallbackResult();
