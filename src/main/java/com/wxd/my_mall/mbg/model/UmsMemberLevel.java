@@ -11,31 +11,31 @@ public class UmsMemberLevel implements Serializable {
 
     private Integer growthPoint;
 
-    @ApiModelProperty(value = "æ˜¯å¦ä¸ºé»˜è®¤ç­‰çº§ï¼š0->ä¸æ˜¯ï¼›1->æ˜¯")
+    @ApiModelProperty(value = "是否为默认等级：0->不是；1->是")
     private Integer defaultStatus;
 
-    @ApiModelProperty(value = "å…è¿è´¹æ ‡å‡†")
+    @ApiModelProperty(value = "免运费标准")
     private BigDecimal freeFreightPoint;
 
-    @ApiModelProperty(value = "æ¯æ¬¡è¯„ä»·èŽ·å–çš„æˆé•¿å€¼")
+    @ApiModelProperty(value = "每次评价获取的成长值")
     private Integer commentGrowthPoint;
 
-    @ApiModelProperty(value = "æ˜¯å¦æœ‰å…é‚®ç‰¹æƒ")
+    @ApiModelProperty(value = "是否有免邮特权")
     private Integer priviledgeFreeFreight;
 
-    @ApiModelProperty(value = "æ˜¯å¦æœ‰ç­¾åˆ°ç‰¹æƒ")
+    @ApiModelProperty(value = "是否有签到特权")
     private Integer priviledgeSignIn;
 
-    @ApiModelProperty(value = "æ˜¯å¦æœ‰è¯„è®ºèŽ·å¥–åŠ±ç‰¹æƒ")
+    @ApiModelProperty(value = "是否有评论获奖励特权")
     private Integer priviledgeComment;
 
-    @ApiModelProperty(value = "æ˜¯å¦æœ‰ä¸“äº«æ´»åŠ¨ç‰¹æƒ")
+    @ApiModelProperty(value = "是否有专享活动特权")
     private Integer priviledgePromotion;
 
-    @ApiModelProperty(value = "æ˜¯å¦æœ‰ä¼šå‘˜ä»·æ ¼ç‰¹æƒ")
+    @ApiModelProperty(value = "是否有会员价格特权")
     private Integer priviledgeMemberPrice;
 
-    @ApiModelProperty(value = "æ˜¯å¦æœ‰ç”Ÿæ—¥ç‰¹æƒ")
+    @ApiModelProperty(value = "是否有生日特权")
     private Integer priviledgeBirthday;
 
     private String note;

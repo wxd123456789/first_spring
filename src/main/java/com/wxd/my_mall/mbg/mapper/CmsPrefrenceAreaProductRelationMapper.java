@@ -2,9 +2,8 @@ package com.wxd.my_mall.mbg.mapper;
 
 import com.wxd.my_mall.mbg.model.CmsPrefrenceAreaProductRelation;
 import com.wxd.my_mall.mbg.model.CmsPrefrenceAreaProductRelationExample;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface CmsPrefrenceAreaProductRelationMapper {
     long countByExample(CmsPrefrenceAreaProductRelationExample example);

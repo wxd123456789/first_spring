@@ -7,31 +7,31 @@ import java.util.Date;
 public class UmsPermission implements Serializable {
     private Long id;
 
-    @ApiModelProperty(value = "çˆ¶çº§æƒé™id")
+    @ApiModelProperty(value = "父级权限id")
     private Long pid;
 
-    @ApiModelProperty(value = "åç§°")
+    @ApiModelProperty(value = "名称")
     private String name;
 
-    @ApiModelProperty(value = "æƒé™å€¼")
+    @ApiModelProperty(value = "权限值")
     private String value;
 
-    @ApiModelProperty(value = "å›¾æ ‡")
+    @ApiModelProperty(value = "图标")
     private String icon;
 
-    @ApiModelProperty(value = "æƒé™ç±»åž‹ï¼š0->ç›®å½•ï¼›1->èœå•ï¼›2->æŒ‰é’®ï¼ˆæŽ¥å£ç»‘å®šæƒé™ï¼‰")
+    @ApiModelProperty(value = "权限类型：0->目录；1->菜单；2->按钮（接口绑定权限）")
     private Integer type;
 
-    @ApiModelProperty(value = "å‰ç«¯èµ„æºè·¯å¾„")
+    @ApiModelProperty(value = "前端资源路径")
     private String uri;
 
-    @ApiModelProperty(value = "å¯ç”¨çŠ¶æ€ï¼›0->ç¦ç”¨ï¼›1->å¯ç”¨")
+    @ApiModelProperty(value = "启用状态；0->禁用；1->启用")
     private Integer status;
 
-    @ApiModelProperty(value = "åˆ›å»ºæ—¶é—´")
+    @ApiModelProperty(value = "创建时间")
     private Date createTime;
 
-    @ApiModelProperty(value = "æŽ’åº")
+    @ApiModelProperty(value = "排序")
     private Integer sort;
 
     private static final long serialVersionUID = 1L;

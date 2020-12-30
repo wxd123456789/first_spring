@@ -2,9 +2,8 @@ package com.wxd.my_mall.mbg.mapper;
 
 import com.wxd.my_mall.mbg.model.CmsMemberReport;
 import com.wxd.my_mall.mbg.model.CmsMemberReportExample;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface CmsMemberReportMapper {
     long countByExample(CmsMemberReportExample example);

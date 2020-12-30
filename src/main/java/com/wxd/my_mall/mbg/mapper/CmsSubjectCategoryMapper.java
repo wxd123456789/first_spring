@@ -2,9 +2,8 @@ package com.wxd.my_mall.mbg.mapper;
 
 import com.wxd.my_mall.mbg.model.CmsSubjectCategory;
 import com.wxd.my_mall.mbg.model.CmsSubjectCategoryExample;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface CmsSubjectCategoryMapper {
     long countByExample(CmsSubjectCategoryExample example);

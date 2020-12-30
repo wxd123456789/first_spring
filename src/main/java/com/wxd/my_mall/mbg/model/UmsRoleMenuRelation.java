@@ -6,10 +6,10 @@ import java.io.Serializable;
 public class UmsRoleMenuRelation implements Serializable {
     private Long id;
 
-    @ApiModelProperty(value = "è§’è‰²ID")
+    @ApiModelProperty(value = "角色ID")
     private Long roleId;
 
-    @ApiModelProperty(value = "èœå•ID")
+    @ApiModelProperty(value = "菜单ID")
     private Long menuId;
 
     private static final long serialVersionUID = 1L;

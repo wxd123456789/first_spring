@@ -11,25 +11,25 @@ public class UmsAdmin implements Serializable {
 
     private String password;
 
-    @ApiModelProperty(value = "å¤´åƒ")
+    @ApiModelProperty(value = "头像")
     private String icon;
 
-    @ApiModelProperty(value = "é‚®ç®±")
+    @ApiModelProperty(value = "邮箱")
     private String email;
 
-    @ApiModelProperty(value = "æ˜µç§°")
+    @ApiModelProperty(value = "昵称")
     private String nickName;
 
-    @ApiModelProperty(value = "å¤‡æ³¨ä¿¡æ¯")
+    @ApiModelProperty(value = "备注信息")
     private String note;
 
-    @ApiModelProperty(value = "åˆ›å»ºæ—¶é—´")
+    @ApiModelProperty(value = "创建时间")
     private Date createTime;
 
-    @ApiModelProperty(value = "æœ€åŽç™»å½•æ—¶é—´")
+    @ApiModelProperty(value = "最后登录时间")
     private Date loginTime;
 
-    @ApiModelProperty(value = "å¸å·å¯ç”¨çŠ¶æ€ï¼š0->ç¦ç”¨ï¼›1->å¯ç”¨")
+    @ApiModelProperty(value = "帐号启用状态：0->禁用；1->启用")
     private Integer status;
 
     private static final long serialVersionUID = 1L;

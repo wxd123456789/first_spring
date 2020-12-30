@@ -2,9 +2,8 @@ package com.wxd.my_mall.mbg.mapper;
 
 import com.wxd.my_mall.mbg.model.CmsTopic;
 import com.wxd.my_mall.mbg.model.CmsTopicExample;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface CmsTopicMapper {
     long countByExample(CmsTopicExample example);

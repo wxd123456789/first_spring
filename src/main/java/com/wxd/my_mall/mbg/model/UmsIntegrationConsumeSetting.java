@@ -6,16 +6,16 @@ import java.io.Serializable;
 public class UmsIntegrationConsumeSetting implements Serializable {
     private Long id;
 
-    @ApiModelProperty(value = "æ¯ä¸€å…ƒéœ€è¦æŠµæ‰£çš„ç§¯åˆ†æ•°é‡")
+    @ApiModelProperty(value = "每一元需要抵扣的积分数量")
     private Integer deductionPerAmount;
 
-    @ApiModelProperty(value = "æ¯ç¬”è®¢å•æœ€é«˜æŠµç”¨ç™¾åˆ†æ¯”")
+    @ApiModelProperty(value = "每笔订单最高抵用百分比")
     private Integer maxPercentPerOrder;
 
-    @ApiModelProperty(value = "æ¯æ¬¡ä½¿ç”¨ç§¯åˆ†æœ€å°å•ä½100")
+    @ApiModelProperty(value = "每次使用积分最小单位100")
     private Integer useUnit;
 
-    @ApiModelProperty(value = "æ˜¯å¦å¯ä»¥å’Œä¼˜æƒ åˆ¸åŒç”¨ï¼›0->ä¸å¯ä»¥ï¼›1->å¯ä»¥")
+    @ApiModelProperty(value = "是否可以和优惠券同用；0->不可以；1->可以")
     private Integer couponStatus;
 
     private static final long serialVersionUID = 1L;

@@ -2,9 +2,8 @@ package com.wxd.my_mall.mbg.mapper;
 
 import com.wxd.my_mall.mbg.model.CmsPrefrenceArea;
 import com.wxd.my_mall.mbg.model.CmsPrefrenceAreaExample;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface CmsPrefrenceAreaMapper {
     long countByExample(CmsPrefrenceAreaExample example);

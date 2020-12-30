@@ -8,13 +8,13 @@ public class UmsMemberTask implements Serializable {
 
     private String name;
 
-    @ApiModelProperty(value = "èµ é€æˆé•¿å€¼")
+    @ApiModelProperty(value = "赠送成长值")
     private Integer growth;
 
-    @ApiModelProperty(value = "èµ é€ç§¯åˆ†")
+    @ApiModelProperty(value = "赠送积分")
     private Integer intergration;
 
-    @ApiModelProperty(value = "ä»»åŠ¡ç±»åž‹ï¼š0->æ–°æ‰‹ä»»åŠ¡ï¼›1->æ—¥å¸¸ä»»åŠ¡")
+    @ApiModelProperty(value = "任务类型：0->新手任务；1->日常任务")
     private Integer type;
 
     private static final long serialVersionUID = 1L;

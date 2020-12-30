@@ -6,10 +6,10 @@ import java.io.Serializable;
 public class UmsRoleResourceRelation implements Serializable {
     private Long id;
 
-    @ApiModelProperty(value = "è§’è‰²ID")
+    @ApiModelProperty(value = "角色ID")
     private Long roleId;
 
-    @ApiModelProperty(value = "èµ„æºID")
+    @ApiModelProperty(value = "资源ID")
     private Long resourceId;
 
     private static final long serialVersionUID = 1L;

@@ -7,13 +7,13 @@ import java.util.Date;
 public class UmsResourceCategory implements Serializable {
     private Long id;
 
-    @ApiModelProperty(value = "åˆ›å»ºæ—¶é—´")
+    @ApiModelProperty(value = "创建时间")
     private Date createTime;
 
-    @ApiModelProperty(value = "åˆ†ç±»åç§°")
+    @ApiModelProperty(value = "分类名称")
     private String name;
 
-    @ApiModelProperty(value = "æŽ’åº")
+    @ApiModelProperty(value = "排序")
     private Integer sort;
 
     private static final long serialVersionUID = 1L;

@@ -1,5 +1,6 @@
 package com.wxd.my_mall.mbg.model;
 
+import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.Date;
 

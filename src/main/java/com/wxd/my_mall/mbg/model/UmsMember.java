@@ -9,55 +9,55 @@ public class UmsMember implements Serializable {
 
     private Long memberLevelId;
 
-    @ApiModelProperty(value = "ç”¨æˆ·å")
+    @ApiModelProperty(value = "用户名")
     private String username;
 
-    @ApiModelProperty(value = "å¯†ç ")
+    @ApiModelProperty(value = "密码")
     private String password;
 
-    @ApiModelProperty(value = "æ˜µç§°")
+    @ApiModelProperty(value = "昵称")
     private String nickname;
 
-    @ApiModelProperty(value = "æ‰‹æœºå·ç ")
+    @ApiModelProperty(value = "手机号码")
     private String phone;
 
-    @ApiModelProperty(value = "å¸å·å¯ç”¨çŠ¶æ€:0->ç¦ç”¨ï¼›1->å¯ç”¨")
+    @ApiModelProperty(value = "帐号启用状态:0->禁用；1->启用")
     private Integer status;
 
-    @ApiModelProperty(value = "æ³¨å†Œæ—¶é—´")
+    @ApiModelProperty(value = "注册时间")
     private Date createTime;
 
-    @ApiModelProperty(value = "å¤´åƒ")
+    @ApiModelProperty(value = "头像")
     private String icon;
 
-    @ApiModelProperty(value = "æ€§åˆ«ï¼š0->æœªçŸ¥ï¼›1->ç”·ï¼›2->å¥³")
+    @ApiModelProperty(value = "性别：0->未知；1->男；2->女")
     private Integer gender;
 
-    @ApiModelProperty(value = "ç”Ÿæ—¥")
+    @ApiModelProperty(value = "生日")
     private Date birthday;
 
-    @ApiModelProperty(value = "æ‰€åšåŸŽå¸‚")
+    @ApiModelProperty(value = "所做城市")
     private String city;
 
-    @ApiModelProperty(value = "èŒä¸š")
+    @ApiModelProperty(value = "职业")
     private String job;
 
-    @ApiModelProperty(value = "ä¸ªæ€§ç­¾å")
+    @ApiModelProperty(value = "个性签名")
     private String personalizedSignature;
 
-    @ApiModelProperty(value = "ç”¨æˆ·æ¥æº")
+    @ApiModelProperty(value = "用户来源")
     private Integer sourceType;
 
-    @ApiModelProperty(value = "ç§¯åˆ†")
+    @ApiModelProperty(value = "积分")
     private Integer integration;
 
-    @ApiModelProperty(value = "æˆé•¿å€¼")
+    @ApiModelProperty(value = "成长值")
     private Integer growth;
 
-    @ApiModelProperty(value = "å‰©ä½™æŠ½å¥–æ¬¡æ•°")
+    @ApiModelProperty(value = "剩余抽奖次数")
     private Integer luckeyCount;
 
-    @ApiModelProperty(value = "åŽ†å²ç§¯åˆ†æ•°é‡")
+    @ApiModelProperty(value = "历史积分数量")
     private Integer historyIntegration;
 
     private static final long serialVersionUID = 1L;
