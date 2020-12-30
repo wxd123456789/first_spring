@@ -34,7 +34,7 @@
 
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.wxd.my_mall.mbg.mapper"
                              targetProject="src/main/java/"/>
-        <!--生成ums开头的表，sql通配符%-->
+        <!--生成数据库中所有表的mapper-->
         <table tableName="%">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
